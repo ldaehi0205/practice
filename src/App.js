@@ -41,9 +41,9 @@ function App() {
         <div className="container">
           <div className="row">
             {sheos.map(e => {
-              const asd = `/detail/${e.id}`;
+              const address = `/detail/${e.id}`;
               return (
-                <Link to={asd}>
+                <Link to={address}>
                   <Card key={e.id} sheos={e} />
                 </Link>
               );
