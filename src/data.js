@@ -9,7 +9,7 @@ export default [
   {
     id: 1,
     title: "Red Knit",
-    content: "Born in Seoul",
+    content: "Sorn in Seoul",
     price: 110000,
   },
 

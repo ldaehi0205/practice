@@ -10,7 +10,7 @@ function App() {
   const [sheos, setsheos] = useState(Data);
 
   return (
-    <>
+    <Screen>
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
@@ -38,43 +38,43 @@ function App() {
       </Navbar>
 
       <Route exact path="/">
-        <div className="container">
+        <ContainerItem>
           <div className="row">
             {sheos.map(e => {
               const address = `/detail/${e.id}`;
               return (
                 <Link to={address}>
-                  <Card key={e.id} sheos={e} />
+                  <Card key={e.id} id={e.id} sheos={e} />
                 </Link>
               );
             })}
           </div>
-          <button
-            onClick={() => {
-              axios
-                .get("https://codingapple1.github.io/shop/data2.json")
-                .then(result => {
-                  //result는 성공했을때 정보를 갖고잇음
-                  const aaa = [...sheos, ...result.data];
-                  setsheos(aaa);
-                });
-            }}
-          >
-            더보기
-          </button>
-        </div>
+        </ContainerItem>
+        <button
+          onClick={() => {
+            axios
+              .get("https://codingapple1.github.io/shop/data2.json")
+              .then(result => {
+                //result는 성공했을때 정보를 갖고잇음
+                const aaa = [...sheos, ...result.data];
+                setsheos(aaa);
+              });
+          }}
+        >
+          더보기
+        </button>
       </Route>
 
       <Route exact path="/detail/:id">
         <Detial sheos={sheos} />
       </Route>
-    </>
+    </Screen>
   );
 }
 
 function Card(props) {
   return (
-    <div className="col-me-4">
+    <ShoesItem>
       <img
         src={`https://codingapple1.github.io/shop/shoes${
           props.sheos.id + 1
@@ -83,8 +83,26 @@ function Card(props) {
       />
       <h4>{props.sheos.content}</h4>
       <p>{props.sheos.price}</p>
-    </div>
+    </ShoesItem>
   );
 }
 
 export default App;
+
+const ContainerItem = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 10px;
+`;
+
+const ShoesItem = styled.div`
+  img {
+    width: 400px;
+    height: 350px;
+  }
+`;
+
+const Screen = styled.div`
+  margin: 10xp 200px;
+`;
