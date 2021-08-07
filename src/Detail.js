@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { range } from "./App";
+import styled from "styled-components";
 
 function Detail(props) {
   const history = useHistory();
   const { id } = useParams();
   const [alert, setalert] = useState(true);
-  const [inputData, setinputData] = useState("");
+  const ranges = useContext(range);
+  // const [inputData, setinputData] = useState("");
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -21,20 +24,16 @@ function Detail(props) {
   //     return product.id === id;
   //   }
   // });
-
+  console.log(ranges);
   return (
     <div className="container">
-      <div>
-        <header>Detail</header>
-      </div>
-
-      <input
+      {/* <input
         onChange={e => {
           setinputData(e.target.value);
         }}
-      />
+      /> */}
 
-      {alert === true && <div>재고가 얼마 남지 않았습니다.</div>}
+      {alert === true && <Modal>재고가 얼마 남지 않았습니다.</Modal>}
       <div className="row">
         <div className="col-md-6">
           <img
@@ -48,6 +47,7 @@ function Detail(props) {
           <h4 className="pt-5">{props.sheos[id].title}</h4>
           <p>{props.sheos[id].content}</p>
           <p>{props.sheos[id].price}</p>
+          <div>{ranges}1231</div>
           <button className="btn btn-danger">주문하기</button>
           <button
             className="btn btn-danger"
@@ -64,3 +64,15 @@ function Detail(props) {
 }
 
 export default Detail;
+
+const Modal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 50px;
+  margin: 10px auto;
+  border-radius: 10px;
+  background-color: orange;
+  color: white;
+`;

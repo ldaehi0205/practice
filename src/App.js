@@ -1,78 +1,68 @@
-import React, { useState } from "react";
-import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
+import React, { useState, useContext, useRef, createContext } from "react";
 import Data from "./data";
 import Detial from "./Detail";
 import styled from "styled-components";
 import { Link, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
 import axios from "axios";
+
+export const range = createContext();
 
 function App() {
   const [sheos, setsheos] = useState(Data);
+  const [stock, setstock] = useState([10, 11, 12]);
+  const row = useRef(null);
 
   return (
     <Screen>
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/detail">Detail</Nav.Link>
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
+      <NavBar />
       <Route exact path="/">
-        <ContainerItem>
-          <div className="row">
-            {sheos.map(e => {
-              const address = `/detail/${e.id}`;
-              return (
-                <Link to={address}>
-                  <Card key={e.id} id={e.id} sheos={e} />
-                </Link>
-              );
-            })}
-          </div>
-        </ContainerItem>
-        <button
-          onClick={() => {
-            axios
-              .get("https://codingapple1.github.io/shop/data2.json")
-              .then(result => {
-                //result는 성공했을때 정보를 갖고잇음
-                const aaa = [...sheos, ...result.data];
-                setsheos(aaa);
-              });
-          }}
-        >
-          더보기
-        </button>
-      </Route>
+        <ListBox>
+          <ContainerItem>
+            <range.Provider value={stock}>
+              <div className="row" ref={row}>
+                {sheos.map(e => {
+                  const address = `/detail/${e.id}`;
+                  return (
+                    <Link to={address}>
+                      <Card key={e.id} id={e.id} sheos={e} />
+                    </Link>
+                  );
+                })}
+              </div>
+            </range.Provider>
+          </ContainerItem>
+        </ListBox>
 
-      <Route exact path="/detail/:id">
-        <Detial sheos={sheos} />
+        <Button>
+          <button
+            onClick={() => {
+              axios
+                .get("https://codingapple1.github.io/shop/data2.json")
+                .then(result => {
+                  //result는 성공했을때 정보를 갖고잇음
+                  const aaa = [...sheos, ...result.data];
+                  aaa[aaa.length - 1].id !== sheos[sheos.length - 1].id &&
+                    setsheos(aaa);
+                });
+            }}
+          >
+            더보기
+          </button>
+        </Button>
       </Route>
+      <range.Provider value={stock}>
+        <Route exact path="/detail/:id">
+          <Detial sheos={sheos} />
+        </Route>
+      </range.Provider>
     </Screen>
   );
 }
 
 function Card(props) {
+  const stock = useContext(range);
+  console.log("stock", stock);
   return (
     <ShoesItem>
       <img
@@ -89,20 +79,40 @@ function Card(props) {
 
 export default App;
 
-const ContainerItem = styled.div`
+const Screen = styled.div`
+  width: 100%;
+  padding: 10px 100px;
+`;
+
+const ListBox = styled.div`
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  margin: 20px 10px;
+`;
+
+const ContainerItem = styled.div`
+  width: 1300px;
 `;
 
 const ShoesItem = styled.div`
   img {
-    width: 400px;
+    width: 420px;
     height: 350px;
   }
 `;
 
-const Screen = styled.div`
-  margin: 10xp 200px;
+const Button = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  button {
+    background-color: orange;
+    color: white;
+    outline-color: orange;
+    border: none;
+
+    :hover {
+      color: gray;
+    }
+  }
 `;
