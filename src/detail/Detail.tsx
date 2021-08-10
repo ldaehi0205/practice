@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { range } from "../main/MainPage";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { useSelector } from "react-redux";
 import HeartBtn from "./components/HeartBtn";
 import styled from "styled-components";
 import axios from "axios";
@@ -11,6 +12,9 @@ function Detail() {
   const { id } = useParams<any>();
   const [alert, setalert] = useState(true);
   const ranges = useContext(range);
+  const productItems = useSelector((state: any) => state);
+  const { value } = productItems.fakeData;
+
   console.log(id, history, "====");
 
   useEffect(() => {
@@ -35,9 +39,9 @@ function Detail() {
           />
         </div>
         <ItemInfo>
-          {/* <h4 className="pt-5">{shoes[id].title}</h4>
-          <p>{shoes[id].content}</p>
-          <p>{shoes[id].price}원</p> */}
+          <h4 className="pt-5">{value[Number(id)].title}</h4>
+          <p>{value[Number(id)].content}</p>
+          <p>{value[Number(id)].price}원</p>
           <ButtonContainer>
             <GoBackBtn
               className="btnGoback"

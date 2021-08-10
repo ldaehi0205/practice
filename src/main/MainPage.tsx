@@ -32,7 +32,7 @@ const MainPage = () => {
       })
       .catch(error => console.log(error));
   };
-
+  console.log(value, "valuevalue");
   return (
     <Wrapper>
       <range.Provider value={stock}>
