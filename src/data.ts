@@ -1,22 +1,22 @@
 export default [
   {
-    id: 0,
+    id: "0",
     title: "White and Black",
     content: "Born in France",
-    price: 120000,
+    price: "120000",
   },
 
   {
-    id: 1,
+    id: "1",
     title: "Red Knit",
     content: "Sorn in Seoul",
-    price: 110000,
+    price: "110000",
   },
 
   {
-    id: 2,
+    id: "2",
     title: "Grey Yordan",
     content: "Born in the States",
-    price: 130000,
+    price: "130000",
   },
 ];

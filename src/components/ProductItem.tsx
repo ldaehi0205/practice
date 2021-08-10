@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 
 interface ProductItem {
-  id: number;
+  id: string;
   shoes: any;
 }
 
@@ -10,7 +10,7 @@ const ProductItem = ({ id, shoes }: ProductItem) => {
   return (
     <ShoesItem>
       <img
-        src={`https://codingapple1.github.io/shop/shoes${id + 1}.jpg`}
+        src={`https://codingapple1.github.io/shop/shoes${Number(id) + 1}.jpg`}
         width="100%"
       />
       <h4>{shoes.content}</h4>

@@ -4,16 +4,14 @@ import { range } from "../main/MainPage";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import HeartBtn from "./components/HeartBtn";
 import styled from "styled-components";
+import axios from "axios";
 
-interface Detail {
-  shoes: Array<any>;
-}
-
-function Detail({ shoes }: Detail) {
+function Detail() {
   const history = useHistory();
   const { id } = useParams<any>();
   const [alert, setalert] = useState(true);
   const ranges = useContext(range);
+  console.log(id, history, "====");
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -24,7 +22,6 @@ function Detail({ shoes }: Detail) {
     };
   }, []);
 
-  console.log(ranges, "range");
   return (
     <Wrapper>
       {alert === true && <Modal>재고가 얼마 남지 않았습니다.</Modal>}
@@ -32,15 +29,15 @@ function Detail({ shoes }: Detail) {
         <div className="col-md-6">
           <img
             src={`https://codingapple1.github.io/shop/shoes${
-              shoes[id].id + 1
+              Number(id) + 1
             }.jpg`}
             width="100%"
           />
         </div>
         <ItemInfo>
-          <h4 className="pt-5">{shoes[id].title}</h4>
+          {/* <h4 className="pt-5">{shoes[id].title}</h4>
           <p>{shoes[id].content}</p>
-          <p>{shoes[id].price}원</p>
+          <p>{shoes[id].price}원</p> */}
           <ButtonContainer>
             <GoBackBtn
               className="btnGoback"
@@ -69,15 +66,6 @@ const Wrapper = styled.div`
 const Item = styled.div`
   display: flex;
   justify-content: center;
-
-  /* button {
-    height: 50px;
-    background-color: #ffa600c6;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    font-size: 18px;
-  } */
 
   .btnOrder {
     height: 50px;
