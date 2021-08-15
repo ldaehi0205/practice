@@ -10,17 +10,16 @@ import styled from "styled-components";
 function Detail() {
   const history = useHistory();
   const { id } = useParams<any>();
-  const [alert, setalert] = useState(true);
+  const [alert, setAlert] = useState(true);
   const ranges = useContext(range);
   const productItems = useSelector((state: any) => state);
-  const { value, cart } = productItems.fakeData;
-  // const { cart } = productItems.cartData;
-  // console.log(productItems.cartData.value, value);
+  const { value } = productItems.fakeData;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      setalert(false);
+      setAlert(false);
     }, 2000);
     return () => {
       clearTimeout(timer);

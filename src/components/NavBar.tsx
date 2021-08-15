@@ -1,16 +1,23 @@
 import React from "react";
 import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 const NavBar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/">Shoes Market</Navbar.Brand>
+        <NavLink to="/">
+          <HomeButton>
+            <strong>Shoes Market</strong>
+          </HomeButton>
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Link to="/">Home</Link>
-          <Link to="/cart">Cart</Link>
+          <NavLink to="/" style={{ margin: "10px" }}>
+            Home
+          </NavLink>
+          <NavLink to="/cart">Cart</NavLink>
           <Nav className="me-auto">
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -31,3 +38,7 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+const HomeButton = styled.div`
+  font-size: 20px;
+`;

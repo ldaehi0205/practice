@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Item from "./components/Item";
@@ -6,8 +6,17 @@ import Item from "./components/Item";
 const Cart = () => {
   const productItems = useSelector((state: any) => state);
   const cartLength = productItems.cartData.value.length;
-  console.log(productItems.cartData.value.length, "productItems");
+  let total: any = [];
+  let totalprice;
 
+  if (cartLength > 0) {
+    total = productItems.cartData.value.map((e: any) => {
+      return e.price * e.count;
+    });
+  }
+  if (total.length > 0) {
+    totalprice = total.reduce((a: number, b: number) => a + b);
+  }
   return (
     <Wrapper>
       <>
@@ -22,33 +31,58 @@ const Cart = () => {
             </EmptyCart>
           ) : (
             <ItemCart>
-              <Item />
+              {productItems.cartData.value.map(
+                (
+                  e: {
+                    image: string | undefined;
+                    title: React.ReactNode;
+                    price: React.ReactNode;
+                    id: number;
+                  },
+                  i: number
+                ) => {
+                  return (
+                    <Item
+                      key={i}
+                      index={i}
+                      id={Number(e.id)}
+                      image={e.image}
+                      content={e.title}
+                      price={e.price}
+                    />
+                  );
+                }
+              )}
             </ItemCart>
           )}
         </ItemList>
         <PriceInfo>
           <PriceInfo_price>
             <dl>
-              <dt>상품금액</dt>
-              <dd>1</dd>
+              <dt>주문금액</dt>
+              {totalprice ? <dd>{totalprice}</dd> : <dd>{0}</dd>}
             </dl>
             <dl>
               <dt>배송금액</dt>
-              <dd>1</dd>
+              {totalprice ? <dd>{3000}</dd> : <dd>{0}</dd>}
             </dl>
             <dl>
               <dt>결제금액</dt>
-              <dd>1</dd>
+              {totalprice ? <dd>{totalprice - 3000}</dd> : <dd>{0}</dd>}
             </dl>
           </PriceInfo_price>
-          <BuyToButton>상품을 담아주세요</BuyToButton>
+          {total.length > 0 ? (
+            <BuyToButton>결제 확인</BuyToButton>
+          ) : (
+            <BuyToEmpty>상품을 담아주세요</BuyToEmpty>
+          )}
         </PriceInfo>
       </>
     </Wrapper>
   );
 };
 
-export default Cart;
+export default React.memo(Cart);
 
 const Wrapper = styled.div`
   width: 100%;
@@ -115,7 +149,7 @@ const PriceInfo_price = styled.div`
   }
 `;
 
-const BuyToButton = styled.button`
+const BuyToEmpty = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,3 +163,20 @@ const BuyToButton = styled.button`
 `;
 
 const ItemCart = styled.div``;
+
+const BuyToButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: orange;
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  border: none;
+  height: 50px;
+
+  :hover {
+    color: #52525253;
+  }
+`;
