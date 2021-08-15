@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { range } from "../main/MainPage";
+import { saveToCart } from "../store/cartSlice";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { useSelector } from "react-redux";
 import HeartBtn from "./components/HeartBtn";
 import styled from "styled-components";
-import axios from "axios";
 
 function Detail() {
   const history = useHistory();
@@ -13,9 +13,10 @@ function Detail() {
   const [alert, setalert] = useState(true);
   const ranges = useContext(range);
   const productItems = useSelector((state: any) => state);
-  const { value } = productItems.fakeData;
-
-  console.log(id, history, "====");
+  const { value, cart } = productItems.fakeData;
+  // const { cart } = productItems.cartData;
+  // console.log(productItems.cartData.value, value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -26,17 +27,27 @@ function Detail() {
     };
   }, []);
 
+  const AddCart = () => {
+    let confirmCart: boolean = false;
+    productItems.cartData.value.forEach((e: { id: any }) => {
+      if (e.id === id) {
+        confirmCart = true;
+        window.alert("이미 장바구니에 있습니다");
+        return;
+      }
+    });
+    if (!confirmCart) {
+      dispatch(saveToCart(value[Number(id)]));
+      window.alert("장바구니에 저장되었습니다");
+    }
+  };
+
   return (
     <Wrapper>
       {alert === true && <Modal>재고가 얼마 남지 않았습니다.</Modal>}
       <Item>
         <div className="col-md-6">
-          <img
-            src={`https://codingapple1.github.io/shop/shoes${
-              Number(id) + 1
-            }.jpg`}
-            width="100%"
-          />
+          <img src={value[Number(id)].image} width="100%" />
         </div>
         <ItemInfo>
           <h4 className="pt-5">{value[Number(id)].title}</h4>
@@ -52,7 +63,9 @@ function Detail() {
               <ArrowBackIcon />
             </GoBackBtn>
             <HeartBtn />
-            <button className="btnOrder">주문하기</button>
+            <button className="btnOrder" onClick={AddCart}>
+              주문하기
+            </button>
           </ButtonContainer>
         </ItemInfo>
       </Item>

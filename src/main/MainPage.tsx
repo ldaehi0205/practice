@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, createContext } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { saveData } from "../store/dataSlice";
-import Data from "../data";
-import Detial from "../detail/Detail";
 import ProductItem from "../components/ProductItem";
 import axios from "axios";
 import styled from "styled-components";
@@ -14,7 +12,7 @@ const MainPage = () => {
   const moreView = useRef(true);
   const dispatch = useDispatch();
   const productItems = useSelector((state: any) => state);
-  const [stock, setstock] = useState([10, 11, 12]);
+  // const [stock, setstock] = useState([10, 11, 12]);
   const { value } = productItems.fakeData;
 
   const AddProductList = (item: any) => {
@@ -23,7 +21,7 @@ const MainPage = () => {
 
   const GetMainItem = () => {
     axios
-      .get("https://codingapple1.github.io/shop/data2.json")
+      .get("http://localhost:3000/data/Data.json")
       .then(result => {
         moreView.current = false;
         result.data.forEach((element: any) => {
@@ -32,26 +30,34 @@ const MainPage = () => {
       })
       .catch(error => console.log(error));
   };
-  console.log(value, "valuevalue");
+
+  if (value.length > 3) {
+    moreView.current = false;
+  }
   return (
     <Wrapper>
-      <range.Provider value={stock}>
-        <ListBox>
-          {value.map((e: any, i: number) => {
-            const address = `/detail/${e.id}`;
-            return (
-              <Link to={address} key={i}>
-                <ProductItem key={e.id} id={e.id} shoes={e} />
-              </Link>
-            );
-          })}
-        </ListBox>
-        {moreView.current && (
-          <Button>
-            <button onClick={GetMainItem}>더보기</button>
-          </Button>
-        )}
-      </range.Provider>
+      {/* <range.Provider value={stock}> */}
+      <ListBox>
+        {value.map((e: any, i: number) => {
+          const address = `/detail/${e.id}`;
+          return (
+            <Link to={address} key={i}>
+              <ProductItem
+                key={e.id}
+                title={e.title}
+                price={e.price}
+                image={e.image}
+              />
+            </Link>
+          );
+        })}
+      </ListBox>
+      {moreView.current && (
+        <Button>
+          <button onClick={GetMainItem}>더보기</button>
+        </Button>
+      )}
+      {/* </range.Provider> */}
     </Wrapper>
   );
 };

@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter as Switch, Link, Route, Router } from "react-router-dom";
+import { BrowserRouter as Switch, Route, Router } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import MainPage from "./main/MainPage";
 import Detial from "./detail/Detail";
+import Cart from "./cart/Cart";
 import { createBrowserHistory } from "history";
 
 const history = createBrowserHistory();
@@ -10,11 +11,12 @@ const history = createBrowserHistory();
 function App() {
   return (
     <>
-      <Navbar />
       <Router history={history}>
         <Switch>
+          <Navbar />
           <Route exact path="/" component={MainPage} />
-          <Route path="/detail/:id" component={Detial} />
+          <Route exact path="/detail/:id" component={Detial} />
+          <Route exact path="/Cart" component={Cart} />
         </Switch>
       </Router>
     </>

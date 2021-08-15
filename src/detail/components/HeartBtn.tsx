@@ -8,7 +8,7 @@ const HeartBtn = () => {
 
   return (
     <Heart onClick={() => setIsHeart(!isHeart)}>
-      {!isHeart ? <FavoriteSharpIcon /> : <FavoriteBorderIcon />}
+      {isHeart ? <FavoriteSharpIcon /> : <FavoriteBorderIcon />}
     </Heart>
   );
 };

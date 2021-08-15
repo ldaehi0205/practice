@@ -2,19 +2,17 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 
 interface ProductItem {
-  id: string;
-  shoes: any;
+  title: string;
+  price: string;
+  image: string;
 }
 
-const ProductItem = ({ id, shoes }: ProductItem) => {
+const ProductItem = ({ title, price, image }: ProductItem) => {
   return (
     <ShoesItem>
-      <img
-        src={`https://codingapple1.github.io/shop/shoes${Number(id) + 1}.jpg`}
-        width="100%"
-      />
-      <h4>{shoes.content}</h4>
-      <p>{shoes.price}</p>
+      <img src={image} width="100%" />
+      <h4>{title}</h4>
+      <p>{price}</p>
     </ShoesItem>
   );
 };
@@ -23,6 +21,7 @@ export default ProductItem;
 
 const ShoesItem = styled.div`
   img {
+    margin: 10px;
     width: 360px;
     height: 280px;
   }
