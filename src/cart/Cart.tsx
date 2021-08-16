@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { removeAll } from "./../store/cartSlice";
+
 import styled from "styled-components";
 import Item from "./components/Item";
 
 const Cart = () => {
   const productItems = useSelector((state: any) => state);
+  const dispatch = useDispatch();
   const cartLength = productItems.cartData.value.length;
   let total: any = [];
   let totalprice;
+
+  const removeAllCart = () => {
+    dispatch(removeAll());
+  };
 
   if (cartLength > 0) {
     total = productItems.cartData.value.map((e: any) => {
@@ -23,7 +30,9 @@ const Cart = () => {
         <ItemList>
           <ItemListHeader>
             <ItemListHeader_selector>전체선택</ItemListHeader_selector>
-            <ItemListHeader_delete>전체삭제</ItemListHeader_delete>
+            <ItemListHeader_delete onClick={removeAllCart}>
+              전체삭제
+            </ItemListHeader_delete>
           </ItemListHeader>
           {!cartLength ? (
             <EmptyCart>
@@ -64,7 +73,7 @@ const Cart = () => {
             </dl>
             <dl>
               <dt>배송금액</dt>
-              {totalprice ? <dd>{3000}</dd> : <dd>{0}</dd>}
+              {totalprice < 500000 ? <dd>{3000}</dd> : <dd>{0}</dd>}
             </dl>
             <dl>
               <dt>결제금액</dt>
@@ -115,10 +124,20 @@ const ItemListHeader = styled.div`
 const ItemListHeader_selector = styled.span`
   padding: 0px 20px;
   border-right: 1px solid gray;
+  cursor: pointer;
+
+  :hover {
+    color: rgb(104, 104, 104);
+  }
 `;
 
 const ItemListHeader_delete = styled.span`
   padding: 0px 20px;
+  cursor: pointer;
+
+  :hover {
+    color: rgb(104, 104, 104);
+  }
 `;
 
 const EmptyCart = styled.div`

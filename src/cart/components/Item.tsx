@@ -25,7 +25,6 @@ const Item = ({ image, content, price, index, id }: itemType) => {
   const removeCart = (number: number) => {
     dispatch(removeItem(number));
   };
-
   return (
     <>
       <Wrapper>

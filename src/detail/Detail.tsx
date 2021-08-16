@@ -10,7 +10,7 @@ import styled from "styled-components";
 function Detail() {
   const history = useHistory();
   const { id } = useParams<any>();
-  const [alert, setAlert] = useState(true);
+  const [alert, setAlert] = useState(false);
   const ranges = useContext(range);
   const productItems = useSelector((state: any) => state);
   const { value } = productItems.fakeData;
@@ -18,12 +18,17 @@ function Detail() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let timer = setTimeout(() => {
-      setAlert(false);
-    }, 2000);
-    return () => {
-      clearTimeout(timer);
-    };
+    productItems.cartData.value.forEach((e: any) => {
+      if (e.id === id) {
+        setAlert(true);
+        let timer = setTimeout(() => {
+          setAlert(false);
+        }, 2000);
+        return () => {
+          clearTimeout(timer);
+        };
+      }
+    });
   }, []);
 
   const AddCart = () => {

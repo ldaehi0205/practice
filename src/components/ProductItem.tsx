@@ -12,7 +12,7 @@ const ProductItem = ({ title, price, image }: ProductItem) => {
     <ShoesItem>
       <img src={image} width="100%" />
       <h4>{title}</h4>
-      <p>{price}</p>
+      <p>{price}원</p>
     </ShoesItem>
   );
 };
