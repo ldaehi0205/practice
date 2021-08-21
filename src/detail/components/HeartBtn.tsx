@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
+import { WishItemContext } from "../../context/WishItemContext";
 import styled from "styled-components";
 
-const HeartBtn = () => {
+const HeartBtn = ({ value }: any) => {
   const [isHeart, setIsHeart] = useState<boolean>(false);
+  const { wishList, AddWishList, RemoveWishList } = useContext(WishItemContext);
+
+  const HandleWishList = () => {
+    console.log(wishList.current, isHeart, "wishList");
+    !isHeart && AddWishList(value);
+    isHeart && RemoveWishList(value);
+    setIsHeart(!isHeart);
+    // console.log(AddWishList);
+    // wishList = { ...wishList };
+  };
 
   return (
-    <Heart onClick={() => setIsHeart(!isHeart)}>
+    <Heart onClick={HandleWishList}>
       {isHeart ? <FavoriteSharpIcon /> : <FavoriteBorderIcon />}
     </Heart>
   );

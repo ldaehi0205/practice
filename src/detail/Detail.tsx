@@ -11,23 +11,22 @@ function Detail() {
   const history = useHistory();
   const { id } = useParams<any>();
   const [alert, setAlert] = useState(false);
-  const ranges = useContext(range);
   const productItems = useSelector((state: any) => state);
   const { value } = productItems.fakeData;
-
+  let timer: any;
   const dispatch = useDispatch();
 
   useEffect(() => {
     productItems.cartData.value.forEach((e: any) => {
       if (e.id === id) {
         setAlert(true);
-        let timer = setTimeout(() => {
+        timer = setTimeout(() => {
           setAlert(false);
         }, 2000);
-        return () => {
-          clearTimeout(timer);
-        };
       }
+      return () => {
+        timer && clearTimeout(timer);
+      };
     });
   }, []);
 
@@ -48,7 +47,7 @@ function Detail() {
 
   return (
     <Wrapper>
-      {alert === true && <Modal>재고가 얼마 남지 않았습니다.</Modal>}
+      {alert === true && <Modal>이미 장바구니에 있는 아이템입니다.</Modal>}
       <Item>
         <div className="col-md-6">
           <img src={value[Number(id)].image} width="100%" />
@@ -66,7 +65,7 @@ function Detail() {
             >
               <ArrowBackIcon />
             </GoBackBtn>
-            <HeartBtn />
+            <HeartBtn value={value[Number(id)]} />
             <button className="btnOrder" onClick={AddCart}>
               주문하기
             </button>
@@ -87,6 +86,7 @@ const Wrapper = styled.div`
 const Item = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 50px;
 
   .btnOrder {
     height: 50px;
