@@ -10,7 +10,9 @@ interface ProductItem {
 const ProductItem = ({ title, price, image }: ProductItem) => {
   return (
     <ShoesItem>
-      <img src={image} width="100%" />
+      <div className="WrapperImg">
+        <img src={image} />
+      </div>
       <h4>{title}</h4>
       <p>{price}원</p>
     </ShoesItem>
@@ -20,9 +22,21 @@ const ProductItem = ({ title, price, image }: ProductItem) => {
 export default ProductItem;
 
 const ShoesItem = styled.div`
-  img {
+  .WrapperImg {
+    overflow: hidden;
     margin: 10px;
     width: 360px;
     height: 280px;
+  }
+
+  img {
+    width: 100%;
+    height: 280px;
+    transform: scale(1);
+    transition: all 0.2s linear;
+
+    :hover {
+      transform: scale(1.1);
+    }
   }
 `;

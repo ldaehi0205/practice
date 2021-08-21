@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { range } from "../main/MainPage";
 import { saveToCart } from "../store/cartSlice";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import HeartBtn from "./components/HeartBtn";
@@ -76,7 +75,7 @@ function Detail() {
   );
 }
 
-export default Detail;
+export default React.memo(Detail);
 
 const Wrapper = styled.div`
   width: 1080px;

@@ -21,7 +21,7 @@ const MainPage = () => {
 
   const GetMainItem = () => {
     axios
-      .get("http://localhost:3000/data/Data.json")
+      .get("/data/Data.json")
       .then(result => {
         moreView.current = false;
         result.data.forEach((element: any) => {
@@ -36,7 +36,6 @@ const MainPage = () => {
   }
   return (
     <Wrapper>
-      {/* <range.Provider value={stock}> */}
       <ListBox>
         {value.map((e: any, i: number) => {
           const address = `/detail/${e.id}`;
@@ -57,7 +56,6 @@ const MainPage = () => {
           <button onClick={GetMainItem}>더보기</button>
         </Button>
       )}
-      {/* </range.Provider> */}
     </Wrapper>
   );
 };

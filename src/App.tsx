@@ -4,6 +4,7 @@ import Navbar from "./components/NavBar";
 import MainPage from "./main/MainPage";
 import Detial from "./detail/Detail";
 import Cart from "./cart/Cart";
+import wishlist from "./wishList/WishListPage";
 import { createBrowserHistory } from "history";
 import WishItemProvider from "./context/WishItemContext";
 
@@ -20,7 +21,8 @@ function App() {
             <Navbar />
             <Route exact path="/" component={MainPage} />
             <Route exact path="/detail/:id" component={Detial} />
-            <Route exact path="/Cart" component={Cart} />
+            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/wishlist" component={wishlist} />
           </Switch>
         </WishItemProvider>
       </Router>
