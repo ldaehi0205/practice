@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createContext } from "react";
+import React, { useRef, createContext } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { saveData } from "../store/dataSlice";
@@ -12,7 +12,6 @@ const MainPage = () => {
   const moreView = useRef(true);
   const dispatch = useDispatch();
   const productItems = useSelector((state: any) => state);
-  // const [stock, setstock] = useState([10, 11, 12]);
   const { value } = productItems.fakeData;
 
   const AddProductList = (item: any) => {
@@ -31,7 +30,7 @@ const MainPage = () => {
       .catch(error => console.log(error));
   };
 
-  if (value.length > 3) {
+  if (value.length > 6) {
     moreView.current = false;
   }
   return (

@@ -87,6 +87,11 @@ const Item = styled.div`
   justify-content: center;
   margin-top: 50px;
 
+  img {
+    width: 500px;
+    height: 400px;
+  }
+
   .btnOrder {
     height: 50px;
     background-color: #ffa600c6;
@@ -107,6 +112,7 @@ const GoBackBtn = styled.button`
   color: #ffa600c6;
   background-color: white;
   border: 1px solid rgb(164, 164, 164);
+  border-radius: 10px;
 `;
 
 const ButtonContainer = styled.div`

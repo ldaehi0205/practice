@@ -27,7 +27,7 @@ const WishListPage = () => {
             <tbody>
               {Object.values(wishList.current).map((obj: any, i: number) => {
                 return (
-                  <tr key={i}>
+                  <tr key={i} style={{ borderBottom: "1px solid gray" }}>
                     <td>
                       <Link to={`/detail/${obj.id}`}>
                         <img src={obj.image} width="70px" height="80px" />

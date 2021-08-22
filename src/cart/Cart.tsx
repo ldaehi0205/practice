@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeAll } from "./../store/cartSlice";
-
 import styled from "styled-components";
 import Item from "./components/Item";
 
@@ -77,7 +76,11 @@ const Cart = () => {
             </dl>
             <dl>
               <dt>결제금액</dt>
-              {totalprice ? <dd>{totalprice - 3000}</dd> : <dd>{0}</dd>}
+              {totalprice ? (
+                <dd>{totalprice < 500000 ? totalprice - 3000 : totalprice}</dd>
+              ) : (
+                <dd>{0}</dd>
+              )}
             </dl>
           </PriceInfo_price>
           {total.length > 0 ? (
