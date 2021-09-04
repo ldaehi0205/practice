@@ -1,17 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface CounterState {
-  value: [
-    {
-      id: number;
-      title: string;
-      content: string;
-      price: number;
-    }
-  ];
+  value: Record<string, string>[];
 }
 
-const initialState: any = {
+const initialState: CounterState = {
   value: [
     {
       id: "0",

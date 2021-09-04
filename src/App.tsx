@@ -8,7 +8,7 @@ import wishlist from "./wishList/WishListPage";
 import { createBrowserHistory } from "history";
 import WishItemProvider from "./context/WishItemContext";
 
-export const wishItem = createContext<any>({});
+export const wishItem = createContext({});
 
 const history = createBrowserHistory();
 

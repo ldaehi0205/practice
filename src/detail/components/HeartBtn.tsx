@@ -4,10 +4,9 @@ import FavoriteSharpIcon from "@material-ui/icons/FavoriteSharp";
 import { WishItemContext } from "../../context/WishItemContext";
 import styled from "styled-components";
 
-const HeartBtn = ({ value }: any) => {
+const HeartBtn = ({ value }: { value: Record<string, string> }) => {
   const [isHeart, setIsHeart] = useState<boolean>(false);
   const { wishList, AddWishList, RemoveWishList } = useContext(WishItemContext);
-
   useEffect(() => {
     Object.keys(wishList.current).includes(value.id) && setIsHeart(true);
   }, []);

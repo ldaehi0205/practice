@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeCount, removeItem } from "../../store/cartSlice";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import styled from "styled-components";
+import { RootState } from "../../store/store";
 
 interface itemType {
   image: string | undefined;
@@ -12,12 +13,23 @@ interface itemType {
   id: number;
 }
 
+interface type {
+  content: string;
+  count: number;
+  id: string;
+  image: string;
+  price: string;
+}
+
 const Item = ({ image, content, price, index, id }: itemType) => {
-  const productItems = useSelector((state: any) => state);
+  const productItems = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
   const countItemNumber = (number: number) => {
-    if (Number(productItems.cartData.value[index].count) < 2 && number === -1)
+    if (
+      Number((productItems.cartData.value[index] as type).count) < 2 &&
+      number === -1
+    )
       return;
     dispatch(changeCount({ index: index, number: number }));
   };
@@ -34,11 +46,12 @@ const Item = ({ image, content, price, index, id }: itemType) => {
         </ItemInfoLeft>
         <ItemInfoRight>
           <span>
-            {Number(price) * Number(productItems.cartData.value[index].count)}
+            {Number(price) *
+              Number((productItems.cartData.value[index] as type).count)}
           </span>
           <button onClick={() => countItemNumber(1)}>➕</button>
           <button disabled>
-            {Number(productItems.cartData.value[index].count)}
+            {Number((productItems.cartData.value[index] as type).count)}
           </button>
           <button onClick={() => countItemNumber(-1)}>➖</button>
           <button onClick={() => removeCart(id)}>

@@ -2,12 +2,22 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { WishItemContext } from "../context/WishItemContext";
 import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import styled from "styled-components";
+
+interface type {
+  content: string;
+  count: string;
+  id: string;
+  image: string;
+  price: string;
+  title: string;
+}
 
 const WishListPage = () => {
   const { wishList, wishListLength } = useContext(WishItemContext);
-  const cartItem = useSelector((state: any) => state.cartData);
-  const cartItemArray = cartItem.value.map((e: any) => {
+  const cartItem = useSelector((state: RootState) => state.cartData);
+  const cartItemArray = cartItem.value.map((e: Record<string, string>) => {
     return e.id;
   });
 
@@ -25,19 +35,25 @@ const WishListPage = () => {
               </tr>
             </thead>
             <tbody>
-              {Object.values(wishList.current).map((obj: any, i: number) => {
+              {Object.values(wishList.current).map((obj, i: number) => {
                 return (
                   <tr key={i} style={{ borderBottom: "1px solid gray" }}>
                     <td>
-                      <Link to={`/detail/${obj.id}`}>
-                        <img src={obj.image} width="70px" height="80px" />
+                      <Link to={`/detail/${(obj as type).id}`}>
+                        <img
+                          src={(obj as type).image}
+                          width="70px"
+                          height="80px"
+                        />
                       </Link>
                     </td>
                     <td>
-                      <Link to={`/detail/${obj.id}`}>{obj.title} </Link>
+                      <Link to={`/detail/${(obj as type).id}`}>
+                        {(obj as type).title}{" "}
+                      </Link>
                     </td>
-                    <td>{obj.price}</td>
-                    {cartItemArray.includes(obj.id) ? (
+                    <td>{(obj as type).price}</td>
+                    {cartItemArray.includes((obj as type).id) ? (
                       <td>⭕️</td>
                     ) : (
                       <td>❌</td>

@@ -3,20 +3,21 @@ import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { saveToCart } from "../store/cartSlice";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { RootState } from "../store/store";
 import HeartBtn from "./components/HeartBtn";
 import styled from "styled-components";
 
 function Detail() {
   const history = useHistory();
-  const { id } = useParams<any>();
+  const { id } = useParams<{ id?: string }>();
   const [alert, setAlert] = useState(false);
-  const productItems = useSelector((state: any) => state);
+  const productItems = useSelector((state: RootState) => state);
   const { value } = productItems.fakeData;
-  let timer: any;
+  let timer: NodeJS.Timeout;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    productItems.cartData.value.forEach((e: any) => {
+    productItems.cartData.value.forEach((e: Record<string, string>) => {
       if (e.id === id) {
         setAlert(true);
         timer = setTimeout(() => {
@@ -31,7 +32,7 @@ function Detail() {
 
   const AddCart = () => {
     let confirmCart: boolean = false;
-    productItems.cartData.value.forEach((e: { id: any }) => {
+    productItems.cartData.value.forEach((e: Record<string, string>) => {
       if (e.id === id) {
         confirmCart = true;
         window.alert("이미 장바구니에 있습니다");

@@ -5,16 +5,17 @@ import { saveData } from "../store/dataSlice";
 import ProductItem from "../components/ProductItem";
 import axios from "axios";
 import styled from "styled-components";
+import { RootState } from "../store/store";
 
 export const range = createContext<number[]>([]);
 
 const MainPage = () => {
   const moreView = useRef(true);
   const dispatch = useDispatch();
-  const productItems = useSelector((state: any) => state);
+  const productItems = useSelector((state: RootState) => state);
   const { value } = productItems.fakeData;
 
-  const AddProductList = (item: any) => {
+  const AddProductList = (item: Record<string, string>) => {
     dispatch(saveData(item));
   };
 
@@ -23,7 +24,7 @@ const MainPage = () => {
       .get("/data/Data.json")
       .then(result => {
         moreView.current = false;
-        result.data.forEach((element: any) => {
+        result.data.forEach((element: Record<string, string>) => {
           AddProductList(element);
         });
       })
@@ -36,7 +37,7 @@ const MainPage = () => {
   return (
     <Wrapper>
       <ListBox>
-        {value.map((e: any, i: number) => {
+        {value.map((e: Record<string, string>, i: number) => {
           const address = `/detail/${e.id}`;
           return (
             <Link to={address} key={i}>

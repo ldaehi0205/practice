@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeAll } from "./../store/cartSlice";
 import styled from "styled-components";
 import Item from "./components/Item";
+import { RootState } from "../store/store";
 
 const Cart = () => {
-  const productItems = useSelector((state: any) => state);
+  const productItems = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
   const cartLength = productItems.cartData.value.length;
-  let total: any = [];
+  let total: number[] = [];
   let totalprice;
 
   const removeAllCart = () => {
@@ -16,9 +17,11 @@ const Cart = () => {
   };
 
   if (cartLength > 0) {
-    total = productItems.cartData.value.map((e: any) => {
-      return e.price * e.count;
-    });
+    total = productItems.cartData.value.map(
+      (e: { price: number; count: number }) => {
+        return e.price * e.count;
+      }
+    );
   }
   if (total.length > 0) {
     totalprice = total.reduce((a: number, b: number) => a + b);
@@ -72,7 +75,11 @@ const Cart = () => {
             </dl>
             <dl>
               <dt>배송금액</dt>
-              {totalprice < 500000 ? <dd>{3000}</dd> : <dd>{0}</dd>}
+              {totalprice && totalprice < 500000 ? (
+                <dd>{3000}</dd>
+              ) : (
+                <dd>{0}</dd>
+              )}
             </dl>
             <dl>
               <dt>결제금액</dt>
